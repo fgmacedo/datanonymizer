@@ -88,6 +88,7 @@ class Field:
         if kwargs:
             conversion = partial(
                 conversion,
+                **kwargs,
             )
         self.conversions.append(conversion)
 

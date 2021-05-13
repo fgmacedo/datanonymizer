@@ -11,17 +11,18 @@ Install
 
 Using pip:
 
-```
-pip install datanonymizer
-```
+.. code-block:: bash
+
+  pip install datanonymizer
+
 
 Or from source:
 
-```
-git clone https://github.com/fgmacedo/datanonymizer
-cd datanonymizer
-python setup.py install
-```
+.. code-block:: bash
+
+  git clone https://github.com/fgmacedo/datanonymizer
+  cd datanonymizer
+  python setup.py install
 
 
 Usage

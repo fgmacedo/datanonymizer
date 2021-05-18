@@ -1,3 +1,4 @@
+import sys
 from functools import partial
 from operator import attrgetter
 
@@ -5,6 +6,7 @@ from yaml.parser import ParserError
 
 from . import conversion as conv
 from .generators import DataGenerator
+from .exceptions import FieldConversionError
 
 
 def parse_file(reader, writer, args):
@@ -17,12 +19,14 @@ def parse_file(reader, writer, args):
             try:
                 new_values = generator(row)
             except Exception as e:
-                raise ParserError(
-                    f"Cannot generate a new line for the line: {row}.\r\nError: {e}"
-                )
+                msg = f"Error at line {idx}: {e}\r\n{row}\r\n"
+                if args.ignore_errors:
+                    sys.stderr.write(msg)
+                else:
+                    raise ParserError(msg)
         writer(new_values)
 
-        if args.head and idx > args.head:
+        if args.head is not None and idx > args.head:
             break
         idx += 1
 
@@ -94,7 +98,12 @@ class Field:
 
     def get_value(self, value):
         for conversion in self.conversions:
-            value = conversion(value)
+            try:
+                value = conversion(value)
+            except Exception as e:
+                raise FieldConversionError(
+                    f"{self.name}: Error when trying to convert {value} using {conversion}."
+                )
 
         if self.generator:
             value = self.generator(value)

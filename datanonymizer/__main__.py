@@ -33,9 +33,18 @@ def main():
         description=DESCRIPTION,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    parser.add_argument("-l", "--language", default="pt-br", help="Language used by the Generator")
+    parser.add_argument(
+        "-l", "--language", default="pt-br", help="Language used by the Generator"
+    )
     parser.add_argument("-di", "--delimiter_input", default=",", help="CSV delimiter")
     parser.add_argument("-do", "--delimiter_output", default=",", help="CSV delimiter")
+    parser.add_argument(
+        "-i",
+        "--ignore_errors",
+        action="store_true",
+        default=False,
+        help="Continue on errors",
+    )
     parser.add_argument(
         "--head", default=None, type=int, help="Outputs only the first <head> lines"
     )

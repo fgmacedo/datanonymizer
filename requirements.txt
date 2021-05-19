@@ -2,7 +2,10 @@
 h3==3.7.2
 black==21.5b1
 PyYAML==5.4.1
+
+# fake data providers supported
 faker>=8,<9
+mimesis==4.1.3
 
 
 # test

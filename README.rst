@@ -127,9 +127,7 @@ Generators
 The generatos clause depends of the library you choose to provide fake data.
 
 
-You can use any generator available at the generic API from
-`Faker <https://faker.readthedocs.io/en/stable/providers.html>`_ or
-`mimesis <https://mimesis.name/api.html>`_ .
+You can use any generator available at the generic API from Faker or mimesis.
 
 
 For example, if you wanna mimic data with company names:

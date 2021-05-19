@@ -41,7 +41,7 @@ def main():
     parser.add_argument(
         "-i",
         "--ignore_errors",
-        action='store_true',
+        action="store_true",
         default=False,
         help="Continue on errors",
     )
@@ -51,8 +51,11 @@ def main():
 
     gen_choices = Generators.choices()
     parser.add_argument(
-        "-g", "--generator", default=gen_choices[0], choices=gen_choices,
-        help="Generator library to be used for fake data"
+        "-g",
+        "--generator",
+        default=gen_choices[0],
+        choices=gen_choices,
+        help="Generator library to be used for fake data",
     )
     parser.add_argument(
         "--seed",
@@ -72,7 +75,9 @@ def main():
         with open(args.config) as f:
             args.config = yaml.load(f, Loader=yaml.FullLoader)
 
-    args.generic = Generators.get(args.generator, language=args.language, seed=args.seed)
+    args.generic = Generators.get(
+        args.generator, language=args.language, seed=args.seed
+    )
 
     reader = csv.reader(sys.stdin, delimiter=args.delimiter_input)
     writer = csv.writer(sys.stdout, delimiter=args.delimiter_output)

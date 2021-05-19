@@ -1,5 +1,3 @@
-
-
 class Generators:
     _available_generators = {}
 
@@ -18,10 +16,10 @@ class Generators:
         return list(cls._available_generators.keys())
 
 
-
 @Generators.register
 def faker(language, seed):
     from faker import Faker
+
     Faker.seed(seed)
     return Faker(language).unique
 
@@ -29,6 +27,7 @@ def faker(language, seed):
 @Generators.register
 def mimesis(language, seed):
     from mimesis import Generic
+
     return Generic(language, seed)
 
 
@@ -54,5 +53,3 @@ class DataGenerator:
             self.already_seen[value] = result
 
         return self.already_seen[value]
-
-

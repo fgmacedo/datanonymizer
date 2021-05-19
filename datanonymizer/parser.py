@@ -38,8 +38,12 @@ def parse_file(reader, writer, args):
 
 def get_line_generator(field_names, config, generic):
     config_fields = config and config.get("fields", {}) or {}
-    fill_empty_names = ((name or f"Field#{col}") for col, name in enumerate(field_names))
-    fields = [Field(name, config_fields.get(name), generic) for name in fill_empty_names]
+    fill_empty_names = (
+        (name or f"Field#{col}") for col, name in enumerate(field_names)
+    )
+    fields = [
+        Field(name, config_fields.get(name), generic) for name in fill_empty_names
+    ]
     values = [field.dest_name for field in fields if field.omit is False]
     return Generator(fields), values
 

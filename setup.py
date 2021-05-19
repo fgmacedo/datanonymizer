@@ -9,7 +9,7 @@ long_description = readme
 
 setup(
     name="datanonymizer",
-    version="0.1",
+    version="0.2",
     description="Anonymizer tool for datasets such CSV files",
     long_description=long_description,
     url="http://github.com/fgmacedo/datanonymizer",

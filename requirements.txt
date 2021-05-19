@@ -2,6 +2,8 @@
 h3==3.7.2
 black==21.5b1
 PyYAML==5.4.1
+faker>=8,<9
+
 
 # test
 pytest==6.2.4

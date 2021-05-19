@@ -1,3 +1,37 @@
+
+
+class Generators:
+    _available_generators = {}
+
+    @classmethod
+    def register(cls, gen):
+        cls._available_generators[gen.__name__] = gen
+        return gen
+
+    @classmethod
+    def get(cls, name, language, seed):
+        gen_fn = cls._available_generators[name]
+        return gen_fn(language, seed)
+
+    @classmethod
+    def choices(cls):
+        return list(cls._available_generators.keys())
+
+
+
+@Generators.register
+def faker(language, seed):
+    from faker import Faker
+    Faker.seed(seed)
+    return Faker(language).unique
+
+
+@Generators.register
+def mimesis(language, seed):
+    from mimesis import Generic
+    return Generic(language, seed)
+
+
 class DataGenerator:
     def __init__(self, provider, unique_retries_limit: int = 10, **kwargs):
         self.provider = provider
@@ -20,3 +54,5 @@ class DataGenerator:
             self.already_seen[value] = result
 
         return self.already_seen[value]
+
+

@@ -24,9 +24,12 @@ setup(
     },
     install_requires=[
         'h3>=3,<4',
-        'mimesis>=4,<5',
         'PyYAML>=5,<6',
+        "faker>=8,<9",
     ],
+    extras_require={
+        "mimesis": ["mimesis>=4,<5"],
+    },
     zip_safe=False,
     keywords='data anonymizer',
     classifiers=[

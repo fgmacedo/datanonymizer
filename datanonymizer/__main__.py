@@ -3,9 +3,9 @@ import sys
 import argparse
 import yaml
 import csv
-from mimesis import Generic
 
 from .parser import parse_file
+from .generators import Generators
 
 
 DESCRIPTION = """
@@ -48,6 +48,12 @@ def main():
     parser.add_argument(
         "--head", default=None, type=int, help="Outputs only the first <head> lines"
     )
+
+    gen_choices = Generators.choices()
+    parser.add_argument(
+        "-g", "--generator", default=gen_choices[0], choices=gen_choices,
+        help="Generator library to be used for fake data"
+    )
     parser.add_argument(
         "--seed",
         default=gen_random_seed,
@@ -66,7 +72,7 @@ def main():
         with open(args.config) as f:
             args.config = yaml.load(f, Loader=yaml.FullLoader)
 
-    args.generic = Generic(args.language, args.seed)
+    args.generic = Generators.get(args.generator, language=args.language, seed=args.seed)
 
     reader = csv.reader(sys.stdin, delimiter=args.delimiter_input)
     writer = csv.writer(sys.stdout, delimiter=args.delimiter_output)

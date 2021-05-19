@@ -41,7 +41,7 @@ def main():
     parser.add_argument(
         "-i",
         "--ignore_errors",
-        action="store_true",
+        action='store_true',
         default=False,
         help="Continue on errors",
     )

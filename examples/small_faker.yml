@@ -1,0 +1,18 @@
+---
+fields:
+  id:
+    generator:
+      provider: pyint
+      kwargs:
+        min_value: 1
+        max_value: 1000
+  address:
+    omit: true
+  complement:
+    conversions:
+      - fn: string.strip
+      - fn: has_value
+    rename: has_complement
+  name:
+    generator:
+      provider: name

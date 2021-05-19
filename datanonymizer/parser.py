@@ -8,6 +8,8 @@ from . import conversion as conv
 from .generators import DataGenerator
 from .exceptions import FieldConversionError
 
+empty_values = object()
+
 
 def parse_file(reader, writer, args):
     idx = 1
@@ -19,12 +21,15 @@ def parse_file(reader, writer, args):
             try:
                 new_values = generator(row)
             except Exception as e:
-                msg = f"Error at line {idx}: {e}\r\n{row}\r\n"
+                msg = f"Error at line {idx}: {e}\r\n{row}\r\n\r\n"
                 if args.ignore_errors:
                     sys.stderr.write(msg)
+                    new_values = empty_values
                 else:
                     raise ParserError(msg)
-        writer(new_values)
+
+        if new_values is not empty_values:
+            writer(new_values)
 
         if args.head is not None and idx > args.head:
             break
@@ -88,7 +93,8 @@ class Field:
         self.generator = DataGenerator(provider=provider, **kwargs)
 
     def _add_conversion(self, meta):
-        conversion = getattr(conv, meta["fn"])
+        getter = attrgetter(meta["fn"])
+        conversion = getter(conv)
         kwargs = meta.get("kwargs", {})
         if kwargs:
             conversion = partial(
@@ -103,7 +109,7 @@ class Field:
                 value = conversion(value)
             except Exception as e:
                 raise FieldConversionError(
-                    f"{self.name}: Error when trying to convert {value} using {conversion}."
+                    f"Field '{self.name}' got an error when trying to convert '{value}' using '{conversion}'."
                 )
 
         if self.generator:

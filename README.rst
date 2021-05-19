@@ -58,6 +58,14 @@ Using a config file to declare conversions and generators for the required field
   cat input_file.csv | datanonymizer --config ./dataset_anon_config.yml >output_file.csv
 
 
+Please see examples folder for a small demo:
+
+.. code-block:: bash
+
+  cat examples/small.csv | python -m datanonymizer -i --config examples/small_faker.yml --seed my_seed >examples/small_anonymized_using_faker.csv
+
+
+
 Optional arguments:
 
 .. code-block::
